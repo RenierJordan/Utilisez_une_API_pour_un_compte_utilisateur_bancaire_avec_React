@@ -42,9 +42,32 @@
   padding: 10px;
 }
 
+.profile-inputs {
+  padding: 10px;
+}
+.profile-input {
+  padding: 8px;
+  margin: 5px;
+}
+
+.profile-save {
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.profile-cancel {
+  border-color: #cc4764;
+  background-color: #cc4764;
+  color: #fff;
+  font-weight: bold;
+}
+
 .header {
   color: #fff;
-  margin-bottom: 2rem;
+  margin: 20px 0;
 }
 
 .transaction-button {

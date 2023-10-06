@@ -4,35 +4,48 @@ import NavBar from "../components/NavBar";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
+import { useNavigate } from "react-router-dom";
+import { getToken } from "../features/callApi";
 
 function Signin() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const serviceData = { email: username, password: password };
 
-    if (username === "Tony" && password === "Test") {
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const getTokenResponse = await getToken(serviceData);
+
+    if (getTokenResponse.status === 200) {
       dispatch(
         login({
           username: username,
           password: password,
-          remember: remember,
+          rememberMe: rememberMe,
           loggedIn: true,
+          token: getTokenResponse.body.token,
         })
       );
+
       console.log("Connection reussie !");
+      navigate("/user");
     } else {
       console.log("Identifiants incorrects");
     }
-  };
+  }
+  async function handleRememberMe() {
+    setRememberMe(!rememberMe);
+  }
 
   return (
     <>
-      <NavBar page={"Signin"} />
+      <NavBar />
       <main className="main bg-dark">
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
@@ -60,7 +73,8 @@ function Signin() {
               <input
                 type="checkbox"
                 id="remember-me"
-                onChange={(e) => setRemember(e.target.value === "on")}
+                defaultValue={rememberMe}
+                onChange={handleRememberMe}
               />
               <label htmlFor="remember-me">Remember me</label>
             </div>
