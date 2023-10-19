@@ -228,13 +228,19 @@ paths:
       tags:
         - User Module
       summary: User Transactions API
-      description: API for updating, adding or deleting the content of a single user transaction
+      description: API for updating the content of a single user transaction
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           required: true
           type: string
+        - in: body
+          name: body
+          description: Update user transaction
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionUpdate"
         - in: path
           name: transactionId
           description: Attach transaction Id
@@ -378,6 +384,21 @@ definitions:
       transactionAmount:
         type: number
       currentAccountBalance:
+        type: number
+      transactionType:
+        type: string
+      transactionCategory:
+        type: string
+      transactionNotes:
+        type: string
+  TransactionUpdate:
+    type: object
+    properties:
+      transactionDate:
+        type: string
+      transactionDescription:
+        type: string
+      transactionAmount:
         type: number
       transactionType:
         type: string
