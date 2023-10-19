@@ -394,13 +394,7 @@ definitions:
   TransactionUpdate:
     type: object
     properties:
-      transactionDate:
-        type: string
       transactionDescription:
-        type: string
-      transactionAmount:
-        type: number
-      transactionType:
         type: string
       transactionCategory:
         type: string
