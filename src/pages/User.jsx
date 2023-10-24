@@ -5,12 +5,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProfile, updateProfile } from "../features/callApi";
 import { saveProfile } from "../features/profileSlice";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 
 function User() {
   const dispatch = useDispatch();
-  const userProfile = useSelector((state) => state.profile.value);
-  const userToken = useSelector((state) => state.user.user.token);
+  const navigate = useNavigate();
+
+  const userProfile = useSelector((state) => state.profile?.value);
+  const userToken = useSelector((state) => state.user?.user?.token);
 
   async function fetchAndDispatchProfile(userToken) {
     const getProfileResponse = await getProfile(userToken);
@@ -20,7 +23,11 @@ function User() {
     }
   }
   useEffect(() => {
-    if (userToken) fetchAndDispatchProfile(userToken);
+    if (userToken) {
+      fetchAndDispatchProfile(userToken);
+    } else {
+      navigate("/login");
+    }
   }, [userToken]);
 
   const [editOn, setEditOn] = useState(false);

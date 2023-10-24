@@ -14,6 +14,8 @@ function Signin() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState(false);
+
   const dispatch = useDispatch();
 
   const serviceData = { email: username, password: password };
@@ -36,6 +38,7 @@ function Signin() {
       console.log("Connection reussie !");
       navigate("/user");
     } else {
+      setErrorMessage(true);
       console.log("Identifiants incorrects");
     }
   }
@@ -68,6 +71,9 @@ function Signin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {errorMessage && (
+                <div className="logs-error">Identifiants incorrects ! </div>
+              )}
             </div>
             <div className="input-remember">
               <input
